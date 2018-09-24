@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>event</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		canvas{
+			 background-image: url("img/anh2.jpg");
+		}
+	</style>
+</head>
+<body>
+	<img src="img/2.jpg" id="flow">
+	<p id="demo"></p>
+	<canvas id= "avt" width="1350px" height="800px"></canvas>
+	<script type="text/javascript">
+		var md = false;
+		//khởi tạo biến canvas. lắng nghe các sự kiện
+		var canvas = document.getElementById('avt');
+		
+		canvas.addEventListener('mouseup',toggledraw);
+		//lấy tọa độ khi di click chuột
+		canvas.addEventListener('mousedown',
+		function(evt){
+			md = true;
+			var mousePos = getMousePos(canvas,evt);
+			var posx = mousePos.x;
+			var posy = mousePos.y;
+			var coor = "X coords: " + posx + ", Y coords: " + posy;
+			document.getElementById("demo").innerHTML = coor;
+			draw(canvas,posx,posy);
+		});
+		function toggledraw(){
+			md = false;
+		}
+		//getBoundingClientRect trả về kích thước và vị trí của điểm
+		function getMousePos(canvas,evt) {
+			var rect = canvas.getBoundingClientRect();
+			return{
+				x:evt.clientX - rect.left,
+				y:evt.clientY - rect.top,
+			};
+		}
+
+		function draw(canvas,posx,posy) {
+			var context = canvas.getContext('2d');
+			if(md){
+				 var img = document.getElementById("flow");
+				context.drawImage(img,posx,posy);
+			}
+		}
+
+	</script>
+</body>
+</html>
